@@ -7,6 +7,7 @@ function DayCare() {
 }
 
 DayCare.prototype.addChild = function(child) {
+  console.log("Children will be added now");
   if (child instanceof Child === false) {
     throw new Error("Expected parameter 'child' to be an instance of Child");
   }

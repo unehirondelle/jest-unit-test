@@ -36,20 +36,24 @@ describe("DayCare", () => {
 
         it("should not add a child if already at capacity", () => {
             const dayCare = new DayCare();
-            const child = new Child("Alice", 4);
-            dayCare.children = [
-                new Child("Tammy", 1),
-                new Child("Mark", 2),
-                new Child("Alvin", 1)
-            ];
-            const mock = jest.spyOn(console, "log");
-            mock.mockImplementation(() => {
-            });
-            dayCare.addChild(child);
-
+            const myMock = jest.spyOn(console, "log");
+            /*myMock.mockImplementation(() => {console.warn("Something");
+            });*/
+            // dayCare.addChild(child);
+            dayCare.addChild(new Child("Tammy", 1));
+            dayCare.addChild(new Child("Mark", 2));
+            dayCare.addChild(new Child("Alvin", 1));
+            dayCare.addChild(new Child("Alice", 4));
             expect(dayCare.children.length).toEqual(3);
-            expect(mock).toBeCalledWith("At capacity, unable to add more children");
-            mock.mockRestore();
+
+            expect(myMock).toHaveBeenCalledTimes(5);
+            expect(myMock.mock.calls[0][0]).toBe("Children will be added now");
+            expect(myMock.mock.calls[1][0]).toBe("Children will be added now");
+            expect(myMock.mock.calls[2][0]).toBe("Children will be added now");
+            expect(myMock.mock.calls[3][0]).toBe("Children will be added now");
+            expect(myMock.mock.calls[4][0]).toBe("At capacity, unable to add more children");
+            // expect(myMock).toBeCalledWith("At capacity, unable to add more children");
+            myMock.mockRestore();
         });
 
         it("should throw an error if not provided a Child object as an argument", () => {
